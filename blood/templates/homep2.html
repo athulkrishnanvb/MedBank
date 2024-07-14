@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MedBank</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Add Font Awesome -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 110%;
+            width: 100%;
+        }
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 56px); /* Adjusting for navbar height */
+        }
+        .ima {
+            position: relative;
+            flex-grow: 1;
+            background: url('https://cdn.britannica.com/32/191732-050-5320356D/Human-red-blood-cells.jpg') no-repeat center center;
+            background-size: cover;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Darkens the image */
+        }
+        .center-buttons {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        .center-buttons .btn {
+            margin: 20px;
+            padding: 40px;
+            width: 200px;
+            height: 200px;
+            font-size: 18px;
+            border-radius: 50%;
+            background-color: rgba(243, 235, 235, 0.281);
+            color: white;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.5); /* Light border */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Original shadow */
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s, border 0.3s; /* Added border transition */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 160px;
+        }
+        .center-buttons .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4); /* Increased shadow on hover */
+            border: 2px solid rgba(255, 255, 255, 0.8); /* Darker border on hover */
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: #f8f9fa;
+            padding: 3px 0;
+            text-align: center;
+            width: 100%;
+        }
+        .navbar {
+            background-color: #ebedef; /* Light background for the navbar */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+        }
+        .navbar-light .navbar-nav .nav-link {
+            color: #495057; /* Darker color for text */
+        }
+        .navbar-nav .nav-item {
+            margin-left: 15px; /* Adjust space between navbar items */
+        }
+        .nav-link.frame-btn {
+            border: 2px solid #495057; /* Border color */
+            border-radius: 5px; /* Rounded corners */
+            padding: 8px 16px; /* Padding to increase button size */
+            font-weight: bold; /* Bold text for emphasis */
+            color: #495057; /* Text color */
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transitions */
+            text-decoration: none; /* Remove underline */
+            display: inline-block; /* Ensures padding is applied correctly */
+        }
+        .nav-link.frame-btn:hover {
+            background-color: #495057; /* Background color on hover */
+            color: #ffffff; /* Text color on hover */
+            border-color: #495057; /* Border color on hover */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'homep' %}">MEDBANK</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link frame-btn" href="{% url 'homep' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link frame-btn" href="{% url 'profile' %}">Profile</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="main-content">
+        <div class="ima">
+            <div class="overlay"></div>
+            <div class="center-buttons">
+                <a href="{% url 'make_blood_donation' %}" class="btn btn-adopt">
+                    <div class="icon"><i class="fas fa-tint"></i></div> <!-- Blood Drop Icon -->
+                    Donate Blood
+                </a>
+                <a href="{% url 'make_blood_request' %}" class="btn btn-adopt">
+                    <div class="icon"><i class="fas fa-hand-holding-heart"></i></div> <!-- Hand Holding Heart Icon -->
+                    Request Blood
+                </a>
+                <a href="{% url 'medi_prods' %}" class="btn btn-adopt">
+                    <div class="icon"><i class="fas fa-capsules"></i></div> <!-- Capsules Icon -->
+                    Medical Products
+                </a>
+                {% if user.is_superuser or user.is_staff %}
+                    <a href="{% url 'medadd' %}" class="btn btn-adopt">
+                        <div class="icon"><i class="fas fa-plus"></i></div> <!-- Plus Icon -->
+                        ADD PRODUCT
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <footer>
+            <p>&copy; 2024 MedBank. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

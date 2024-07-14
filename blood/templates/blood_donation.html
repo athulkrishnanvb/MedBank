@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blood Donation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e0f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .form-container h1 {
+            color: #00796b;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .form-control {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-control label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #00796b;
+        }
+        .form-control input, .form-control select, .form-control textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #b2dfdb;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease-in-out;
+        }
+        .form-control input:focus, .form-control select:focus, .form-control textarea:focus {
+            border-color: #00796b;
+            outline: none;
+        }
+        .form-control button {
+            background-color: #00796b;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .form-control button:hover {
+            background-color: #004d40;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Make a Blood Donation</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-control">
+                <label for="donor_name">Donor Name:</label>
+                {{ form.donor_name }}
+            </div>
+            <div class="form-control">
+                <label for="donor_age">Donor Age:</label>
+                {{ form.donor_age }}
+            </div>
+            <div class="form-control">
+                <label for="blood_group">Blood Group:</label>
+                {{ form.blood_group }}
+            </div>
+            <div class="form-control">
+                <label for="quantity_ml">Quantity (ml):</label>
+                {{ form.quantity_ml }}
+            </div>
+            <div class="form-control">
+                <button type="submit">Submit Donation</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

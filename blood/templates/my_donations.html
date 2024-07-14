@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Blood Donations</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e0f7fa;
+            margin: 0;
+        }
+        .navbar {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            color: #00796b !important;
+        }
+        .nav-link {
+            color: #00796b !important;
+            transition: color 0.3s ease-in-out;
+        }
+        .nav-link:hover {
+            color: #004d40 !important;
+        }
+        .container {
+            margin-top: 40px;
+        }
+        h1 {
+            color: #00796b;
+            margin-bottom: 20px;
+        }
+        .table thead {
+            background-color: #00796b;
+            color: white;
+        }
+        .table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .status-pending {
+            background-color: #f0f0f0;
+        }
+        .status-approved {
+            background-color: #d0f0d0;
+        }
+        .navbar-light .navbar-nav .nav-link {
+            color: #495057; /* Darker color for text */
+        }
+        .navbar-nav .nav-item {
+            margin-left: 15px; /* Adjust space between navbar items */
+        }
+        .nav-link.frame-btn {
+            border: 2px solid #495057; /* Border color */
+            border-radius: 5px; /* Rounded corners */
+            padding: 8px 16px; /* Padding to increase button size */
+            font-weight: bold; /* Bold text for emphasis */
+            color: #495057; /* Text color */
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transitions */
+            text-decoration: none; /* Remove underline */
+            display: inline-block; /* Ensures padding is applied correctly */
+        }
+        .nav-link.frame-btn:hover {
+            background-color: #495057; /* Background color on hover */
+            color: #ffffff; /* Text color on hover */
+            border-color: #495057; /* Border color on hover */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'hompg' %}">MEDBANK</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link frame-btn" href="{% url 'hompg' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link frame-btn" href="{% url 'my_blood_request' %}">Your Requests</a></li>
+                <li class="nav-item"><a class="nav-link frame-btn" href="{% url 'profile' %}">Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1>Your Blood Donations</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Donor Name</th>
+                    <th>Donor Age</th>
+                    <th>Blood Group</th>
+                    <th>Quantity (ml)</th>
+                    <th>Donation Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for donation in blood_donations %}
+                <tr class="status-{{ donation.status|lower }}">
+                    <td>{{ donation.donor_name }}</td>
+                    <td>{{ donation.donor_age }}</td>
+                    <td>{{ donation.blood_group }}</td>
+                    <td>{{ donation.quantity_ml }}</td>
+                    <td>{{ donation.donation_date }}</td>
+                    <td>{{ donation.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

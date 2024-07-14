@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Booking</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .product-image {
+            max-width: 100%; /* Ensures image is responsive */
+            height: auto;
+            border-radius: 5px;
+            max-width: 300px; /* Adjust this value to make the image smaller */
+        }
+        .product-description {
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+        .booking-options {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .booking-options h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .booking-options .form-group {
+            margin-bottom: 20px;
+        }
+        .booking-options .btn-primary {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+        footer a {
+            color: #f8fafc;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+        }
+        .navbar .form-inline {
+            margin-right: 15px; /* Adjust margin for search bar */
+        }
+        .navbar-nav .nav-item {
+            margin-left: 15px; /* Space between links */
+        }
+    </style>
+    <script>
+        function handleBuyNow(event) {
+            event.preventDefault();
+            const paymentMethod = document.getElementById('id_payment_method').value;
+            if (paymentMethod === 'UPI') {
+                const upiLink = "upi://pay?pa=your-upi-id@upi&pn=Recipient Name&mc=your-merchant-code&tr=unique-transaction-id&tn=Transaction Note&am=Amount&cu=INR";
+                window.location.href = upiLink;
+            } else {
+                document.getElementById('booking-form').submit();
+            }
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'hompg' %}">MEDBANK</a>
+        <div class="collapse navbar-collapse justify-content-center">
+            <!-- <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+        </div>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'hompg' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'medi_prods' %}">Products</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ product.photo.url }}" alt="{{ product.name }}" class="product-image">
+                <div class="product-description">
+                    <h2>{{ product.name }}</h2>
+                    <p>{{ product.description }}</p>
+                    <p><strong>Price: ₹{{ product.price }}</strong></p>
+                    <!-- Quantity has been removed -->
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="booking-options">
+                    <h3>Book this Product</h3>
+                    <form id="booking-form" method="post" action="{% url 'product_book' product.pk %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="payment_method">Payment Method</label>
+                            {{ form.payment_method }}
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            {{ form.address }}
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="handleBuyNow(event)">Buy Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 MEDBANK. All rights reserved.</p>
+            <p>
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a> |
+                <a href="mailto:medbank108@gmail.com">Contact Us</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
